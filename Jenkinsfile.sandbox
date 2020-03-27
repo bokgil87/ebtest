@@ -1,0 +1,14 @@
+library identifier: 'dealicious-jenkins-pipeline-library', changelog: false
+
+def meta = publishMeta(
+    awsProfile: 'sandbox',
+    applicationName: 'newrelic-extentions-test',
+    environmentName: 'NewrelicExtentionsTest-env-java1',
+    applicationPath: 'target',
+    targetFile: 'test.zip'
+)
+publishAppPipeline meta: meta, {
+    sh "mvn clean package -DskipTests -Pdevelop"
+    sh "mv ${meta.applicationPath}/ssm-api-payment-v1.0.0-develop.zip application.zip"
+    sh "mv application.zip ${meta.applicationPath}/${meta.targetFile}"
+}
