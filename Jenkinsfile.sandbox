@@ -3,7 +3,7 @@ library identifier: 'dealicious-jenkins-pipeline-library', changelog: false
 def meta = publishMeta(
     awsProfile: 'sandbox',
     applicationName: 'newrelic-extentions-test',
-    environmentName: 'NewrelicExtentionsTest-env-java1',
+    environmentName: 'NewrelicExtentionsTest-env-java',
     applicationPath: 'target',
     targetFile: 'test.zip'
 )
