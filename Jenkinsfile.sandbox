@@ -4,11 +4,12 @@ def meta = publishMeta(
     awsProfile: 'sandbox',
     applicationName: 'newrelic-extentions-test',
     environmentName: 'NewrelicExtentionsTest-env-java',
-    applicationPath: 'target',
-    targetFile: 'test.zip'
+    aapplicationPath: 'build/libs',
+    targetFile: 'app.zip'
 )
 publishAppPipeline meta: meta, {
-    sh "mvn clean package -DskipTests -Pdevelop"
-    sh "mv ${meta.applicationPath}/ssm-api-payment-v1.0.0-develop.zip application.zip"
-    sh "mv application.zip ${meta.applicationPath}/${meta.targetFile}"
-}
+     sh "./gradlew clean build -x test -Dspring.profiles.active=sandbox"
+     sh "mv ${meta.applicationPath}/ad-payment-service-*.jar ${meta.applicationPath}/ad-payment-service.jar"
+     sh "zip -r ${meta.targetFile} Procfile ${meta.applicationPath}/ad-payment-service.jar .ebextensions"
+     sh "mv ${meta.targetFile} ${meta.destinationFile}"
+ }
